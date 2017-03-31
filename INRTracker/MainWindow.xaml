@@ -4,9 +4,101 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:INRTracker"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        Title="INR Tracker" 
+        Width="640" 
+        Height="480"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize">
+
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <ei:CallMethodAction TargetObject="{Binding}"
+                                 MethodName="LoadEntries"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+      
+    <Window.Resources>
+        <Style x:Key="HeaderTextStyle"
+               TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="BaseButtonStyle"
+               TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="Padding" Value="10,0,10,0"/>
+        </Style>
+
+        <Style x:Key="AddButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource BaseButtonStyle}">
+            <Setter Property="Background" Value="PaleGreen"/>
+        </Style>
+
+        <Style x:Key="RemoveButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource ResourceKey=BaseButtonStyle}">
+            <Setter Property="Background" Value="IndianRed"/>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel>
+        <DockPanel LastChildFill="False">
+            <Label x:Name="MainLogoLabel"
+                   Style="{StaticResource HeaderTextStyle}"
+                   DockPanel.Dock="Left" Content="INR Tracker"/>
+
+            <Button x:Name="AddEntryButton"
+                    Style="{StaticResource AddButtonStyle}"
+                    DockPanel.Dock="Left" 
+                    Command="{Binding Path=AddEntryCommand}"
+                    Content="Add Entry"/>
+
+            <Button x:Name="RemoveEntryButton"
+                    Style="{StaticResource RemoveButtonStyle}"
+                    DockPanel.Dock="Left" 
+                    Command="{Binding Path=RemoveEntryCommand}"
+                    Content="Remove Entry"/>
+
+        </DockPanel>
+        <Grid/>
+        <DataGrid x:Name="INREntryDataGrid" 
+                  RowDetailsVisibilityMode="VisibleWhenSelected" 
+                  Margin="10,10,10,10" 
+                  ItemsSource="{Binding Path=Entries, Mode=TwoWay}"
+                  SelectedItem="{Binding Path=SelectedEntry, Mode=TwoWay}"
+                  Height="385" 
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="DateColumn"
+                                    Width="SizeToHeader"
+                                    Header="Date"
+                                    Binding="{Binding Path=Date, StringFormat=dd-MM-yyyy}"/>
+                <DataGridTextColumn x:Name="DoseMgColumn" 
+                                    Width="SizeToHeader" 
+                                    Header="Dose Mg" 
+                                    Binding="{Binding Path=DoseMg}"/>
+                <DataGridTextColumn x:Name="DoseMgAlternatingColumn" 
+                                    Width="SizeToHeader" 
+                                    Header="Dose Mg Alternating" 
+                                    Binding="{Binding Path=DoseMgAlternating}"/>
+                <DataGridTextColumn x:Name="INRColumn" 
+                                    Width="SizeToHeader" 
+                                    Header="INR" 
+                                    Binding="{Binding INR}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
 </Window>
