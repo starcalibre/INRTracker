@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace INRTracker.Models
+namespace INRTracker
 {
     /// <summary>
     /// Base class for models that implements the INotifyPropertyChanged interface.
@@ -12,7 +12,6 @@ namespace INRTracker.Models
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
         
-
         #endregion
 
         #region Methods

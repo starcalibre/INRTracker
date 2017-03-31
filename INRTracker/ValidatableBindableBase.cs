@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace INRTracker.Models
+namespace INRTracker
 {
     /// <summary>
     /// Base class for models implementing the INotifyPropertyChanged and 
