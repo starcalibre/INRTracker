@@ -31,7 +31,6 @@ namespace INRTracker.Models
             get { return _inr; }
             set
             {
-                _inr = value;
                 SetProperty(ref _inr, value);
             }
         }
@@ -54,6 +53,27 @@ namespace INRTracker.Models
             {
                 SetProperty(ref _doseMgAlternating, value);
             }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Creates a random, mock INREntry object. Used as mock data for
+        /// design mode.
+        /// </summary>
+        /// <returns></returns>
+        public static INREntry GenerateRandomEntry()
+        {
+            return new INREntry()
+            {
+                INREntryID = -1,
+                Date = Common.RandomDateTime(),
+                DoseMg = Common.RandomFloat(0f, 10f),
+                DoseMgAlternating = Common.RandomFloat(0, 10f),
+                INR = Common.RandomFloat(1f, 4f)
+            };
         }
 
         #endregion
